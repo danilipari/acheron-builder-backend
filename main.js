@@ -12,13 +12,18 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(morgan('combined'));
 
-app.use(cors());
-
 /* Homepage Backend */
-app.get('/', (req: any, res: { send: (arg0: string) => any; }) =>
-  res.send(`init`)
+app.get('/', (req, res) =>
+  res.send(`<h2>Acheron Builder Backend System</h2>`)
 );
 
+/* Routes */
+const workflowsRoutes = require('./routes/workflows');
+const formsRoutes = require('./routes/forms');
+
+app.use(cors());
+app.use('/workflows', workflowsRoutes);
+app.use('/forms', formsRoutes);
 
 
 const port = process.env.PORT || 8000;

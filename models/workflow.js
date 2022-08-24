@@ -1,0 +1,78 @@
+'use strict';
+const { Model } = require('sequelize');
+const models = require('../models');
+module.exports = (sequelize, DataTypes) => {
+  class workflow extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models = models) {
+      // define association here
+      workflow.belongsToMany(models.Form,
+        {
+          through: 'form',
+          foreignKey: 'Parent_parentId'
+        }
+      );
+    }
+  };
+  workflow.init({
+    id: {
+      type: DataTypes.BIGINT(12),
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: false,
+      validate: {
+        notEmpty: true,
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: false,
+    },
+    uuid: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
+      defaultValue: DataTypes.UUIDV4
+    },
+    deleted_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    forms: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+    error_form: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+    unavailable_form: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+    layout_id: {
+      type: DataTypes.BIGINT(12),
+      allowNull: true,
+    },
+    deleted_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+  }, {
+    sequelize,
+    modelName: 'Workflow',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+  });
+  return workflow;
+};
