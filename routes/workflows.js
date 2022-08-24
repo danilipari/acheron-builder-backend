@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { getWorkflows, addWorkflow } = require('../controllers/workflowsController');
-const { getForms, findFormByPk } = require('../controllers/formsController');
+const { getForms } = require('../controllers/formsController');
 
 router.get('/', async (req, res) => {
   try {
