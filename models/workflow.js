@@ -1,6 +1,5 @@
 'use strict';
 const { Model } = require('sequelize');
-const models = require('../models');
 module.exports = (sequelize, DataTypes) => {
   class Workflow extends Model {
     /**
@@ -10,12 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models = models) {
       // define association here
-      Workflow.belongsToMany(models.Form,
-        {
-          through: 'form',
-          foreignKey: 'Parent_parentId'
-        }
-      );
     }
   };
   Workflow.init({
@@ -75,5 +68,13 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   });
+
+  Workflow.associate = (models) => {
+    Workflow.hasMany(models.Form, {
+      as: 'formsItems',
+      foreignKey: 'formId',
+    });
+  };
+
   return Workflow;
 };

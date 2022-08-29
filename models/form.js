@@ -1,6 +1,5 @@
 'use strict';
 const { Model } = require('sequelize');
-const models = require('../models');
 module.exports = (sequelize, DataTypes) => {
   class Form extends Model {
     /**
@@ -10,12 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models = models) {
       // define association here
-      Form.belongsToMany(models.Workflow,
-        {
-          through: 'workflow',
-          foreignKey: 'Child_childId'
-        }
-      )
     }
   };
   Form.init({
@@ -65,5 +58,13 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   });
+
+  Form.associate = (models) => {
+    Form.hasMany(models.Workflow, {
+      as: 'workflowItems',
+      foreignKey: 'workflowId',
+    });
+  };
+
   return Form;
 };
