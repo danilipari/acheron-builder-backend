@@ -2,7 +2,7 @@
 const { Model } = require('sequelize');
 const models = require('../models');
 module.exports = (sequelize, DataTypes) => {
-  class form extends Model {
+  class Form extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models = models) {
       // define association here
-      form.belongsToMany(models.Workflow,
+      Form.belongsToMany(models.Workflow,
         {
           through: 'workflow',
           foreignKey: 'Child_childId'
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       )
     }
   };
-  form.init({
+  Form.init({
     id: {
       type: DataTypes.BIGINT(12),
       autoIncrement: true,
@@ -61,8 +61,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Form',
+    tableName: 'forms',
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   });
-  return form;
+  return Form;
 };

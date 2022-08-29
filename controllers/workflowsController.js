@@ -1,11 +1,12 @@
-const Workflow = require('../models').Workflow;
+const models = require('../models');
+const Sequelize = require('sequelize');
 
 async function getWorkflows() {
-  return Workflow.findAll();
+  return models.Workflow.findAll();
 }
 
 async function addWorkflow(workflow) {
-  return Workflow.create(workflow);
+  return models.Workflow.create(workflow);
 }
 
 module.exports = { getWorkflows, addWorkflow };
